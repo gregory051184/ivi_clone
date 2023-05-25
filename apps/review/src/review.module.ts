@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import {forwardRef, Module} from '@nestjs/common';
 import {SequelizeModule} from "@nestjs/sequelize";
 import { ReviewController } from './review.controller';
 import { ReviewService } from './review.service';

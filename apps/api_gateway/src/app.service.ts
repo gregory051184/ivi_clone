@@ -1,7 +1,8 @@
 import {HttpException, HttpStatus, Inject, Injectable} from "@nestjs/common";
-import {CreateFilmDto, Driver} from "@app/common";
+import {CreateFilmDto, Driver, User} from "@app/common";
 import {ClientProxy} from "@nestjs/microservices";
 import {lastValueFrom} from "rxjs";
+import {InjectModel} from "@nestjs/sequelize";
 
 const axios = require("axios");
 const cheerio = require("cheerio");
@@ -10,7 +11,9 @@ const {By, until} = require("selenium-webdriver");
 
 @Injectable()
 export class AppService {
-    constructor(@Inject("FILM") private readonly filmClient: ClientProxy) {}
+    constructor(@Inject("FILM") private readonly filmClient: ClientProxy,
+                @InjectModel(User) private readonly usersRep: typeof User
+                ) {}
 
     addFiltersToFilterObject(filterObject, filter: string) {
         if (filter.includes("-") || filter.length == 4) {
@@ -373,8 +376,8 @@ export class AppService {
         return awards;
     }
 
-    // async getUserByEmail(email: string) {
-    //     const user = await this.usersRep.findOne({where: {email: email}, include: {all: true}});
-    //     return user;
-    // };
+     async getUserByEmail(email: string) {
+         const user = await this.usersRep.findOne({where: {email: email}, include: {all: true}});
+         return user;
+     };
 }

@@ -1,4 +1,4 @@
-import {Body, Controller, Delete, Get, Inject, Param, Post, Put, Query, Req, UseGuards} from '@nestjs/common';
+import {Body, Controller, Delete, Get, Inject, Param, Post, Put, Query, UseGuards} from '@nestjs/common';
 import {ClientProxy} from "@nestjs/microservices";
 import {AppService} from "../app.service";
 import {ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags} from "@nestjs/swagger";
@@ -10,7 +10,7 @@ import {
     AddPersonDto,
     AddRelatedFilmDto,
     CreateFilmDto,
-    Film, Roles, RolesGuard,
+    Film, Roles, RolesGuard, UpdateFilmDto,
 } from "@app/common";
 
 
@@ -223,13 +223,13 @@ export class AppFilmsController {
     @Roles("ADMIN", "SUPERUSER")
     @UseGuards(RolesGuard)
     @Put("/films/:id")
-    async editFilm(@Body() name: string,
+    async editFilm(@Body() updateFilmDto: UpdateFilmDto,
                    @Param("id") id: any) {
         return this.filmClient.send(
             {
                 cmd: "edit-film",
             }, {
-                name,
+                updateFilmDto,
                 id
             },
         );

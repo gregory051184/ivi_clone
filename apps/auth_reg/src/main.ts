@@ -4,6 +4,7 @@ import {ConfigService} from "@nestjs/config";
 import {CommonService, ValidationPipe} from "@app/common";
 import * as session from "express-session";
 import * as passport from "passport";
+//import * as cookieParser from 'cookie-parser';
 
 
 async function bootstrap() {
@@ -11,6 +12,7 @@ async function bootstrap() {
     app.useGlobalPipes(new ValidationPipe());
     app.setGlobalPrefix("api")
 
+    //app.use(cookieParser())
     app.use(session({
         cookie: {
             maxAge: 60000 * 24

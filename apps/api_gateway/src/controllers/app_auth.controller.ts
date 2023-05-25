@@ -1,7 +1,9 @@
-import {Body, Controller, Get, Inject, Post, Req, UseGuards} from '@nestjs/common';
+import {Body, Controller, Get, Inject, Post, Req, Res, UseGuards} from '@nestjs/common';
 import {ClientProxy} from "@nestjs/microservices";
 import {ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
-import {GoogleAuthGuard, UserLoginDto, VkAuthGuard} from "@app/common";
+import {GoogleAuthGuard, LoginGuard, UserLoginDto, VkAuthGuard} from "@app/common";
+
+
 
 
 
@@ -13,8 +15,9 @@ export class AppAuthController {
     @ApiOperation({summary: `Авторизация через email и пароль. В ответ получаете jwt-token, который нужно 
     поместить в заголовки запроса ("Authorization: Bearer jwt-token)`})
     @ApiResponse({status: 200, type: String})
+    @UseGuards(LoginGuard)
     @Post("/login")
-    async login(@Body() userLoginDto: UserLoginDto) {
+    async login(@Body() userLoginDto: UserLoginDto, @Res({passthrough: true}) res) {
         return this.usersClient.send({
             cmd: "login"
         }, {
@@ -39,7 +42,7 @@ export class AppAuthController {
     @ApiResponse({status: 200, type: String})
     @UseGuards(GoogleAuthGuard)
     @Get("google/login")
-    handleLogin() {
+    googleLogin() {
         return {
             msg: "Google auth - success"
         }
@@ -56,7 +59,7 @@ export class AppAuthController {
 
     @UseGuards(GoogleAuthGuard)
     @Get("google/redirect")
-    handleRedirect() {
+    googleRedirect() {
         return {
             msg: "Google auth - success"
         }

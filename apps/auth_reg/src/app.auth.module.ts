@@ -15,7 +15,7 @@ import {PassportModule} from "@nestjs/passport";
         }),
         PassportModule.register({session: true}),
         UsersModule,
-        CommonModule,
+        forwardRef(() => CommonModule),
         forwardRef(() => AuthModule),
     ]
 })

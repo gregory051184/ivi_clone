@@ -1,6 +1,6 @@
-import {Module} from '@nestjs/common';
-import {CommonModule, PostgresFilmDbModule} from "@app/common";
-import {ConfigModule, ConfigService} from "@nestjs/config";
+import {forwardRef, Module} from '@nestjs/common';
+import {CommonModule} from "@app/common";
+import {ConfigModule} from "@nestjs/config";
 import {RolesModule} from "./roles/roles.module";
 
 

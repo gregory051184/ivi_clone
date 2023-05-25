@@ -9,8 +9,7 @@ import {
     Profession,
     PersonFilms,
     CreatePersonDto,
-    CreateProfessionDto,
-    UpdatePersonDto, UpdateProfessionDto
+    UpdatePersonDto
 } from "@app/common";
 import {ProfessionService} from "./profession.service";
 
